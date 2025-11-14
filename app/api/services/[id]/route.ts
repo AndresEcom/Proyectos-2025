@@ -20,7 +20,7 @@ const serviceSchema = z.object({
   cargoDescription: z.string().optional(),
   requiresHelper: z.boolean().default(false),
   debrisType: z.enum(["OBRA", "TIERRA", "MADERA", "ARIDOS", "MIXTO"]).optional(),
-  debrisQuantity: z.enum(["MEDIO_CAMION", "LLENO"]).optional(),
+  debrisQuantity: z.enum(["PEQUENO", "MEDIO_CAMION", "LLENO"]).optional(),
   notes: z.string().optional(),
 
   // Opcional: vincular a cliente recurrente

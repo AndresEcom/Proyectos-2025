@@ -111,6 +111,7 @@ enum DebrisType {
 }
 
 enum DebrisQuantity {
+  PEQUENO
   MEDIO_CAMION
   LLENO
 }

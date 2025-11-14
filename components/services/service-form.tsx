@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { Calendar as CalendarIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -45,7 +46,7 @@ const serviceFormSchema = z.object({
 
   // Campos condicionales para ESCOMBROS
   debrisType: z.enum(["OBRA", "TIERRA", "MADERA", "ARIDOS", "MIXTO"]).optional(),
-  debrisQuantity: z.enum(["MEDIO_CAMION", "LLENO"]).optional(),
+  debrisQuantity: z.enum(["PEQUENO", "MEDIO_CAMION", "LLENO"]).optional(),
 
   notes: z.string().optional(),
 })
@@ -78,29 +79,55 @@ export function ServiceForm({
     resolver: zodResolver(serviceFormSchema),
     defaultValues: service
       ? {
-          clientName: service.clientName,
-          clientPhone: service.clientPhone,
+          clientName: service.clientName || "",
+          clientPhone: service.clientPhone || "",
           clientAddress: service.clientAddress || "",
           type: service.type,
           status: service.status,
           scheduledDate: new Date(service.scheduledDate).toISOString().slice(0, 16),
-          price: service.price,
+          price: service.price || 0,
           origin: service.origin || "",
           destination: service.destination || "",
           cargoDescription: service.cargoDescription || "",
-          requiresHelper: service.requiresHelper,
+          requiresHelper: service.requiresHelper || false,
           debrisType: service.debrisType || undefined,
           debrisQuantity: service.debrisQuantity || undefined,
           notes: service.notes || "",
         }
       : {
+          clientName: "",
+          clientPhone: "",
+          clientAddress: "",
           status: "PENDIENTE",
           requiresHelper: false,
           scheduledDate: initialDate
             ? new Date(initialDate).toISOString().slice(0, 16)
             : "",
+          price: 0,
         },
   })
+
+  // Efecto para actualizar el formulario cuando cambia el servicio a editar
+  useEffect(() => {
+    if (service) {
+      reset({
+        clientName: service.clientName || "",
+        clientPhone: service.clientPhone || "",
+        clientAddress: service.clientAddress || "",
+        type: service.type,
+        status: service.status,
+        scheduledDate: new Date(service.scheduledDate).toISOString().slice(0, 16),
+        price: service.price || 0,
+        origin: service.origin || "",
+        destination: service.destination || "",
+        cargoDescription: service.cargoDescription || "",
+        requiresHelper: service.requiresHelper || false,
+        debrisType: service.debrisType || undefined,
+        debrisQuantity: service.debrisQuantity || undefined,
+        notes: service.notes || "",
+      })
+    }
+  }, [service, reset])
 
   const serviceType = watch("type")
 
@@ -270,15 +297,21 @@ export function ServiceForm({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <div className="space-y-2">
-                <Label htmlFor="scheduledDate" className="text-sm md:text-base">
+                <Label htmlFor="scheduledDate" className="text-sm md:text-base flex items-center gap-2">
+                  <CalendarIcon className="h-4 w-4 text-primary" />
                   Fecha y Hora *
                 </Label>
-                <Input
-                  id="scheduledDate"
-                  type="datetime-local"
-                  {...register("scheduledDate")}
-                  className="text-sm md:text-base"
-                />
+                <div className="relative">
+                  <Input
+                    id="scheduledDate"
+                    type="datetime-local"
+                    {...register("scheduledDate")}
+                    className="text-sm md:text-base font-medium pr-3"
+                    style={{
+                      colorScheme: "light",
+                    }}
+                  />
+                </div>
                 {errors.scheduledDate && (
                   <p className="text-xs md:text-sm text-destructive">
                     {errors.scheduledDate.message}
@@ -420,6 +453,7 @@ export function ServiceForm({
                           <SelectValue placeholder="Selecciona cantidad" />
                         </SelectTrigger>
                         <SelectContent>
+                          <SelectItem value="PEQUENO">Pequeño (1 colchón, 1 refrigerador, etc.)</SelectItem>
                           <SelectItem value="MEDIO_CAMION">Medio camión</SelectItem>
                           <SelectItem value="LLENO">Camión lleno</SelectItem>
                         </SelectContent>

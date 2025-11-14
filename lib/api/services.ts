@@ -17,7 +17,7 @@ export interface Service {
   cargoDescription?: string | null
   requiresHelper: boolean
   debrisType?: "OBRA" | "TIERRA" | "MADERA" | "ARIDOS" | "MIXTO" | null
-  debrisQuantity?: "MEDIO_CAMION" | "LLENO" | null
+  debrisQuantity?: "PEQUENO" | "MEDIO_CAMION" | "LLENO" | null
   notes?: string | null
 
   // Relación opcional con cliente recurrente
@@ -50,7 +50,7 @@ export interface CreateServiceDTO {
   cargoDescription?: string
   requiresHelper?: boolean
   debrisType?: "OBRA" | "TIERRA" | "MADERA" | "ARIDOS" | "MIXTO"
-  debrisQuantity?: "MEDIO_CAMION" | "LLENO"
+  debrisQuantity?: "PEQUENO" | "MEDIO_CAMION" | "LLENO"
   notes?: string
 
   // Opcional: vincular a cliente recurrente

@@ -242,3 +242,27 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-muted-foreground/50;
 }
+
+/* Estilos mejorados para inputs de fecha y hora - Estilo ERP moderno */
+input[type="datetime-local"],
+input[type="date"],
+input[type="time"] {
+  @apply relative cursor-pointer;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  @apply cursor-pointer opacity-70 hover:opacity-100 transition-opacity;
+  background: transparent;
+  color: hsl(var(--primary));
+  padding: 4px;
+  margin-left: 4px;
+}
+
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus {
+  @apply ring-2 ring-primary ring-offset-2;
+}
