@@ -2,6 +2,12 @@
 
 Sistema MVP para gestionar servicios de fletes, mudanzas y retiro de escombros. Diseñado para equipos pequeños (2 personas) con funcionalidades esenciales.
 
+## 🚀 Estado del Deployment
+- ✅ **Deploy Automático:** Configurado con Render
+- ✅ **Base de Datos:** PostgreSQL en Neon (producción)
+- ✅ **CI/CD:** Auto-deploy en push a `main`
+- 🌐 **URL Producción:** https://flete-mvp.onrender.com (actualizando...)
+
 ## Características
 
 ### Funcionalidades Implementadas
