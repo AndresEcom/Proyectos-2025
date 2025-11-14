@@ -31,9 +31,6 @@ export async function GET(request: NextRequest) {
           lte: endDate,
         },
       },
-      include: {
-        client: true,
-      },
       orderBy: {
         scheduledDate: "asc",
       },
@@ -43,6 +40,7 @@ export async function GET(request: NextRequest) {
     const headers = [
       "Fecha",
       "Cliente",
+      "Teléfono",
       "Tipo",
       "Origen",
       "Destino",
@@ -53,7 +51,8 @@ export async function GET(request: NextRequest) {
 
     const rows = services.map((service) => [
       format(new Date(service.scheduledDate), "dd/MM/yyyy HH:mm"),
-      service.client.name,
+      service.clientName,
+      service.clientPhone,
       service.type,
       service.origin || "-",
       service.destination || "-",
